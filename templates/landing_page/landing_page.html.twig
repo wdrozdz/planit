@@ -1,0 +1,138 @@
+{% extends 'base.html.twig' %}
+{% block title %}Register{% endblock %}
+{% block stylesheets %}
+    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+{% endblock %}
+{% block body %}
+    <style xmlns="http://www.w3.org/1999/html">
+        .btn-show-password {
+            height: 45px;
+        }
+
+        .register-form-wrapper {
+            width: 100%;
+            height: 100vh;
+            justify-content: flex-end;
+            margin: 0;
+        }
+
+        .register-form {
+            height: 100%;
+            width: 23%;
+        }
+
+        body {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, .58) 0, rgba(0, 0, 0, .6) 100%), url("https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .abcRioButton {
+            width: 100% !important;
+        }
+
+        .big-logo-wrapper {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .big-logo {
+            height: 9vh;
+            width: 9vh;
+        }
+
+        .welcome-message-wrapper {
+            position: absolute;
+            top: 23vh;
+            left: 16vh;
+
+        }
+
+        .welcome-message {
+            color: #f2c194 !important;
+        }
+
+        .welcome-message-big {
+            font-size: 10vh
+        }
+
+        .welcome-message-small {
+            font-size: 2.3vh
+        }
+
+        .welcome-message-list {
+            font-size: 2vh
+        }
+
+        .sign-in {
+            color: #e3832b !important;
+            font-size: 2.4vh;
+        }
+    </style>
+
+    <div class="welcome-message-wrapper">
+        <p class="text-primary welcome-message welcome-message-big">PlanIt.</p>
+        <p class="text-primary welcome-message welcome-message-small">Use PlanIt as tool to plan your projects, work,
+            school and anything you want for free!</p>
+        <p class="text-primary welcome-message welcome-message-small">More about PlanIt:</p>
+        <ul class="welcome-message welcome-message-list">
+            <li> Work on your projects with group</li>
+            <li> Menage and use built in chat</li>
+            <li> You can get notifications via mail when someone assign task to you,<br> or when someone complete task
+                assigned by you
+            </li>
+            <li> Share your plans and works to: client, teacher or anyone else with only few clicks</li>
+        </ul>
+    </div>
+
+    <div class="row register-form-wrapper">
+        <div class="card bg-light register-form">
+
+            <div class="card-body">
+                <div class="big-logo-wrapper">
+                    <img class="big-logo mb-4"
+                         src="https://www.freelogodesign.org/file/app/client/thumb/54307ce0-ac13-4793-8e4b-24f43579daa5_200x200.png?1574947640270">
+                </div>
+                <h1 class="text-left mt-5">Sign up</h1>
+                <p class="mb-4">Create your free account.</p>
+                {{ form_start(registrationForm) }}
+                {{ form_row(registrationForm.name) }}
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.plainPassword) }}
+                {{ form_row(registrationForm.agreeTerms) }}
+                <button class="btn btn-primary btn-block mb-2">Register</button>
+                {{ form_end(registrationForm) }}
+                <div id="my-signin2"></div>
+                <div class="text-center mt-4">
+                    Already have account?<br>
+                    <a class="sign-in mt-2" href="/sign-in">Sign in.</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function onSuccess(googleUser) {
+            console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+        }
+
+        function onFailure(error) {
+            console.log(error);
+        }
+
+        function renderButton() {
+            gapi.signin2.render('my-signin2', {
+                'scope': 'profile email',
+                'width': 240,
+                'height': 50,
+                'longtitle': true,
+                'theme': 'dark',
+                'onsuccess': onSuccess,
+                'onfailure': onFailure
+            });
+        }
+    </script>
+
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+{% endblock %}
