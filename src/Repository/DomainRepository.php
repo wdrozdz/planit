@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Repository;
-
 use App\Entity\Domain;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -19,22 +18,23 @@ class DomainRepository extends ServiceEntityRepository
         parent::__construct($registry, Domain::class);
     }
 
-    // /**
-    //  * @return Domain[] Returns an array of Domain objects
-    //  */
-    /*
-    public function findByExampleField($value)
+
+    /**
+     * @param $currentUser
+     * @return Domain[] Returns an array of Domain objects
+     */
+
+    public function getDomainsByUser($currentUser)
     {
         return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('d.users = :val')
+            ->setParameter('val', $currentUser)
             ->orderBy('d.id', 'ASC')
-            ->setMaxResults(10)
+            ->setMaxResults(15)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Domain

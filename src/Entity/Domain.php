@@ -23,30 +23,32 @@ class Domain
      */
     private $domain;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $url;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", name="users")
      */
     private $users;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="domains")
      */
-    private $domainusers;
+    private $domainUsers;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="domain")
      */
     private $projects;
 
+
     public function __construct()
     {
-        $this->domainusers = new ArrayCollection();
+        $this->domainUsers = new ArrayCollection();
         $this->projects = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return (string) $this->getDomainUsers();
     }
 
     public function getId(): ?int
@@ -66,17 +68,6 @@ class Domain
         return $this;
     }
 
-    public function getUrl(): ?int
-    {
-        return $this->url;
-    }
-
-    public function setUrl(int $url): self
-    {
-        $this->url = $url;
-
-        return $this;
-    }
 
     public function getUsers(): ?int
     {
@@ -93,24 +84,24 @@ class Domain
     /**
      * @return Collection|User[]
      */
-    public function getDomainusers(): Collection
+    public function getDomainUsers(): Collection
     {
         return $this->domainusers;
     }
 
-    public function addDomainUser(User $domainuser): self
+    public function addDomainUser(User $domainUser): self
     {
-        if (!$this->domainusers->contains($domainuser)) {
-            $this->domainusers[] = $domainuser;
+        if (!$this->domainusers->contains($domainUser)) {
+            $this->domainusers[] = $domainUser;
         }
 
         return $this;
     }
 
-    public function removeDomainUser(User $domainuser): self
+    public function removeDomainUser(User $domainUser): self
     {
-        if ($this->domainusers->contains($domainuser)) {
-            $this->domainusers->removeElement($domainuser);
+        if ($this->domainusers->contains($domainUser)) {
+            $this->domainusers->removeElement($domainUser);
         }
 
         return $this;
@@ -146,4 +137,6 @@ class Domain
 
         return $this;
     }
+
+
 }

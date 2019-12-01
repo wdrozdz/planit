@@ -1,3 +1,6 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+index:
+    path: /
+    controller: App\Controller\WorkspaceController::new
+projects:
+    path: /main/projects
+    controller: App\Controller\ProjectController::displayProjects

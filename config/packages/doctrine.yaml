@@ -5,6 +5,10 @@ doctrine:
         # use sqlite for SQLite
         driver: 'mysql'
         server_version: '5.7'
+        dbname:               database
+        host:                 localhost
+        user:                 psmdb
+        password:             password@database
 
         # only needed for MySQL
         charset: utf8mb4

@@ -2,6 +2,7 @@
 
 
 namespace App\Controller;
+
 use App\Form\DomainFormType;
 use App\Entity\Domain;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,7 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class MainController extends AbstractController
+
+class WorkspaceController extends AbstractController
 {
     private $session;
 
@@ -20,22 +22,19 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("addWorkspace", name="app_addWorkspace")
+     * @Route("main", name="app_addWorkspace")
      */
     public function new(Request $request): Response
     {
         if ($this->isGranted("IS_AUTHENTICATED_FULLY")) {
 
-
-            //adds domain
             $domain = new Domain();
             $form = $this->createForm(DomainFormType::Class, $domain);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $User = $this->getUser()->getID();
-                $domain->setUsers($User);
-                $domain->setUrl(rand(100000, 999999));
+                $user = $this->getUser()->getID();
+                $domain->setUsers($user);
 
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($domain);
@@ -43,9 +42,9 @@ class MainController extends AbstractController
                 return $this->redirect("main");
             }
 
-            return $this->render('main.html.twig', ['form' => $form->createView()]);
+            return $this->render('workspaces/workspace_form.html.twig', ['form' => $form->createView()]);
         } else {
-            return $this->redirectToRoute("app_login");
+            return $this->redirectToRoute("app_welcome");
         }
     }
 
@@ -60,34 +59,38 @@ class MainController extends AbstractController
             $workspaces = $this->getDoctrine()
                 ->getRepository(Domain::class)
                 ->getDomainsByUser($currentUser);
-            return $this->render('workspaces.html.twig', array('workspaces' => $workspaces));
+            return $this->render('workspaces/workspaces.html.twig', array('workspaces' => $workspaces));
         } else {
-            return $this->redirectToRoute("app_login");
+            return $this->redirectToRoute("main");
         }
     }
 
     /**
      * @Route("main/delete/{id}")
      */
+
     public function delete($id)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
-        $workspaces = $this->getDoctrine()->getRepository(Domain::class)->find($id);
+        $domain = $this->getDoctrine()->getRepository(Domain::class)->find($id);
 
-        $entityManager->remove($workspaces);
+        $entityManager->remove($domain);
         $entityManager->flush();
-        return $this->redirectToRoute("app_main");
+        return $this->redirectToRoute("app_addWorkspace");
 
     }
 
     /**
-     * @Route("main/select/{id}")
+     * @Route("main/select/{currentWorkspace}/{currentWorkspaceName}")
      */
-    public function select($id)
+    public function select($currentWorkspace, $currentWorkspaceName)
     {
-        $this->session->set('currentWorkspace', $id);
-        return $this->redirectToRoute("app_main");
+
+
+        $this->session->set('currentWorkspace', $currentWorkspace);
+        $this->session->set('currentWorkspaceName', $currentWorkspaceName);
+        return $this->redirectToRoute("app_displayProjects");
     }
 
 }

@@ -6,25 +6,29 @@
 
     {{ render(controller("App\\Controller\\WorkspaceController::showAction")) }}
 
-    <div class="text-center"><button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#addModal">CREATE WORKSPACE</button></div>
-        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Create workspace</h5>
-                    </div>
-                    <div class="modal-body">
-                        {{ form_start(form) }}
-                        {{ form_row(form.domain, { 'label': 'WORKSPACE' }) }}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        {{ form_widget(form.create, { 'label': 'Create' , 'attr' : {'class' : 'btn btn-success'}})}}
-                            {{ form_end(form) }}
+    <div class="text-center">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">CREATE WORKSPACE
+        </button>
+    </div>
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create workspace</h5>
+                </div>
+                <div class="modal-body">
+                    {{ form_start(form) }}
+                    {{ form_row(form.domain, { 'label': 'WORKSPACE' }) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    {{ form_widget(form.create, { 'label': 'Create' , 'attr' : {'class' : 'btn btn-success'}}) }}
+                    {{ form_end(form) }}
 
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 {% endblock %}

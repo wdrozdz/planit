@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+{% endblock %}
+{% block body %}
+
+<style>
+    .delete-project{
+        width:100%
+    }
+</style>
+
+
+    <div class="list-group">
+    {% for project in projects %}
+        <a href="/projects/select/{{project.id}}/{{ project.project }}" class="list-group-item list-group-item-action delete-project">
+            {{project.project}}
+        </a>
+    {% endfor %}
+    </div>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

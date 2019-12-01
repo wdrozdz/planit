@@ -21,11 +21,11 @@ class Project
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private $project;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Domain", inversedBy="projects")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $domain;
 
@@ -44,14 +44,14 @@ class Project
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getProject(): ?string
     {
-        return $this->name;
+        return $this->project;
     }
 
-    public function setName(string $name): self
+    public function setProject(string $project): self
     {
-        $this->name = $name;
+        $this->project = $project;
 
         return $this;
     }
@@ -86,16 +86,4 @@ class Project
         return $this;
     }
 
-    public function removeTask(Task $task): self
-    {
-        if ($this->tasks->contains($task)) {
-            $this->tasks->removeElement($task);
-            // set the owning side to null (unless already changed)
-            if ($task->getProject() === $this) {
-                $task->setProject(null);
-            }
-        }
-
-        return $this;
-    }
 }

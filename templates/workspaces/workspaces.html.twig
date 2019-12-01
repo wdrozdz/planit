@@ -7,45 +7,50 @@
         <h4 class="text-center mt-2 mb-5">Choose your workspace.</h4>
         <table id="workspace" class="table table-dark table-hover">
             <thead>
-                <tr>
-                    <th scope="col">Workspace name</th>
-                    <th scope="col">Actions</th>
-                </tr>
+            <tr>
+                <th scope="col">Workspace name</th>
+                <th scope="col">Actions</th>
+            </tr>
             </thead>
 
-        {% for domain in workspaces %}
-            <!-- table row -->
-            <tr>
-                <td>
-                    {{ domain.domain }}
-                </td>
-                <td>
-                    <!-- select workspace-->
-                    <a href="/main/select/{{domain.id}}" class="btn btn-warning delete-workspace">Select</a>
-                    <!-- remove workspace modal trigger -->
-                    <button type="button" class="btn btn-danger"  data-toggle="modal" data-target="#removeModal-{{ domain.id }}">Delete</button>
-                </td>
-            </tr>
+            {% for domain in workspaces %}
+                <!-- table row -->
+                <tr>
+                    <td>
+                        {{ domain.domain }}
+                    </td>
+                    <td>
+                        <!-- select workspace-->
+                        <a href="/main/select/{{domain.id}}/{{ domain.domain }}" class="btn btn-warning delete-workspace">Select</a>
+                        <!-- remove workspace modal trigger -->
+                        <button type="button" class="btn btn-danger" data-toggle="modal"
+                                data-target="#removeModal-{{ domain.id }}">Delete
+                        </button>
+                    </td>
+                </tr>
 
-            <!-- remove-modal -->
-            <div class="modal fade" id="removeModal-{{ domain.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
-                        </div>
-                        <div class="modal-body">
-                            <a class="blockquote mt-3 mb-3">This action will remove workspace and all projects that it contains</a>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <a href="/main/delete/{{domain.id}}" class="btn btn-danger delete-workspace">Delete</a>
+                <!-- remove-modal -->
+                <div class="modal fade" id="removeModal-{{ domain.id }}" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                            </div>
+                            <div class="modal-body">
+                                <a class="blockquote mt-3 mb-3">This action will remove workspace and all projects that
+                                    it contains</a>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <a href="/main/delete/{{ domain.id }}"
+                                   class="btn btn-danger delete-workspace">Delete</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-        {% endfor %}
+            {% endfor %}
         </table>
     {% elseif not workspaces %}
         <div class="text-center">
@@ -53,8 +58,8 @@
             <!-- add workspace modal trigger -->
         </div>
     {% endif %}
-        <div class="text-center">
+    <div class="text-center">
 
 
-        </div>
+    </div>
 {% endblock %}
