@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+{% block title %}Log in!{% endblock %}
+{% block stylesheets %}
+    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+{% endblock %}
+{% block body %}
+<style>
+    body{
+        background: linear-gradient(to bottom,rgba(0, 0, 0, .3) 0,rgba(0, 0, 0,.5) 100%),url("https://images.unsplash.com/photo-1472289065668-ce650ac443d2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80");
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    .login-form-wrapper{
+        height: 100vh;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+    .login-form{
+        width: 400px;
+    }
+    .abcRioButton{
+        width:100% !important;
+    }
+    .big-logo-wrapper{
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+    .big-logo{
+        height: 9vh;
+        width: 9vh;
+    }
+
+
+</style>
+
+
+    <div class="row login-form-wrapper">
+            <form method="post">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+                <div class="card login-form">
+                    <div class="card-body bg-light">
+                        <div class="big-logo-wrapper">
+                            <img class="text-center big-logo mb-4" src="https://www.freelogodesign.org/file/app/client/thumb/54307ce0-ac13-4793-8e4b-24f43579daa5_200x200.png?1574947640270">
+                        </div>
+
+                        <h1 class="h3 mb-4 p-1 font-weight-normal text-center">Sign in</h1>
+
+                        <div class="form-group">
+                            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                        </div>
+                        <input type="hidden" name="_csrf_token"
+                               value="{{ csrf_token('authenticate') }}"
+                        >
+                        <button class="btn btn-primary btn-block mb-3 mt-4" type="submit">
+                            Sign in
+                        </button>
+                        <div class="form-group ">
+                            <div id="my-signin2"></div>
+                        </div>
+                        <div class="form-group text-center mt-4">
+                            You dont have account?<br>
+                            <a href="/register">Sign up.</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+    </div>
+
+    <script>
+        function onSuccess(googleUser) {
+            console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+        }
+        function onFailure(error) {
+            console.log(error);
+        }
+        function renderButton() {
+            gapi.signin2.render('my-signin2', {
+                'scope': 'profile email',
+                'width': 240,
+                'height': 50,
+                'longtitle': true,
+                'theme': 'dark',
+                'onsuccess': onSuccess,
+                'onfailure': onFailure
+            });
+        }
+    </script>
+
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+{% endblock %}
